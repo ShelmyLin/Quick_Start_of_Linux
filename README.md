@@ -42,7 +42,10 @@
 * TAB 敲两次 出现所有可能结果
 * Linux命令执行机制：翻译+执行 如ls  系统先执行ls=ls --color 然后在执行ls --color   alias ls=ls可设置回来
 再比如 alias ubuntu=ls 这样执行ubuntu这条命令时 系统会把ubuntu解释成ls
-
+* 查找某一命令的详解，使用man，比如 
+```
+$ man ls
+```
 ```
 $ ll -h
 total 228K
@@ -185,13 +188,57 @@ test.tar.gz
 ```
 
 ### 查找文件 find
+| 命令                                     |  解释                                              |
+| -----------                              | :--------                                          |
+| find {folder} -name "*string*"             | 在{folder}目录下查找文件名含有string的文件       |
 
+```
+$ find ./ -name "*android*"
+./android
+./android/android_forum.md
+./android/android_theory.md
+
+```
 
 ### 查找文件内容 grep
+| 命令                                     |  解释                                                        |
+| -----------                              | :--------                                                    |
+| grep "string" ./*                        | 在当前目录下（不含子目录）查找含有string内容的文件           |
+| grep -r "string" ./*                     | 在当前目录下（含子目录）查找含有string内容的文件             |
+| grep -rn "string" ./*                    | 在当前目录下（含子目录）查找含有string内容的文件,并打印行号  |
+
+```
+$ grep -rn "hello" test/*
+1:this is an example of grep, i want to find "hello"
+```
+
 ### 修改文件权限 chmod
 
+这里先复习以下ls命令
+```
+$ ll
+total 12
+drwxrwxr-x 2 lin lin 4096 Mar 22 22:24 ./
+drwxr-xr-x 4 lin lin 4096 Mar 22 22:25 ../
+-rw-rw-r-- 1 lin lin   66 Mar 22 22:24 hello.txt
 
-## Linux 信息查询
+```
+第二到第九十列：r读 w写 x执行 -表示对应的rwx无权限   第一个rwx表示文件所有者权限，第二个表示组权限 第三个表示其他用户权限。若用二进制加以区分不同的权限的话，111（即十进制的7）代表可读可写可执行，110（即十进制的6）代表可读可写但是不可执行，以此类推。
+
+| 命令                                     |  解释                                                                               |
+| -----------                              | :--------                                                                           |
+| chmod 权限值 文件名                      | 给文件赋以相应的权限，如chmod 666 hello.txt,表示所有用户都可对hello.txt进行读写操作 | 
+
+```
+$ chmod 666 hello.txt 
+$ ll
+total 12
+drwxrwxr-x 2 lin lin 4096 Mar 22 22:24 ./
+drwxr-xr-x 4 lin lin 4096 Mar 22 22:25 ../
+-rw-rw-rw- 1 lin lin   66 Mar 22 22:24 hello.txt
+```
+
+## 第二章 Linux 信息查询
 ### 查看计算机信息
 #### 查看cpu信息：sudo cat /proc/cpuinfo
 #### 查看内存：sudo cat /proc/meminfo
